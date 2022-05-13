@@ -1,30 +1,51 @@
 
 public abstract class OAHashTable implements IHashTable {
-	
-	private HashTableElement [] table;
-	
+
+	private HashTableElement[] table;
+
 	public OAHashTable(int m) {
 		this.table = new HashTableElement[m];
 		// TODO add to constructor as needed
 	}
-	
-	
+
 	@Override
 	public HashTableElement Find(long key) {
-		// TODO implement find
+		for (int i = 0; i < this.table.length; i++) {
+			int probingIndex = this.Hash(key, i);
+			HashTableElement elem = this.table[probingIndex];
+			if (elem == null) {
+				return null;
+			}
+			if (elem.GetKey() == key) {
+				return elem;
+			}
+		}
 		return null;
 	}
-	
+
 	@Override
-	public void Insert(HashTableElement hte) throws TableIsFullException,KeyAlreadyExistsException {
-		// TODO implement insertion	
+	public void Insert(HashTableElement hte) throws TableIsFullException, KeyAlreadyExistsException {
+		// TODO implement insertion
 	}
-	
+
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
-		// TODO implement deletion
+		for (int i = 0; i < this.table.length; i++) {
+			int probingIndex = this.Hash(key, i);
+			HashTableElement elem = this.table[probingIndex];
+			if (elem == null) {
+				throw new KeyDoesntExistException(key);
+			}
+			if (elem.GetKey() == key) {
+				HashTableElement deleted = new HashTableElement(-1, -1);
+				this.table[probingIndex] = deleted;
+				return;
+			}
+		}
+		throw new KeyDoesntExistException(key);
+
 	}
-	
+
 	/**
 	 * 
 	 * @param x - the key to hash
