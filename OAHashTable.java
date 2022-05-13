@@ -43,7 +43,6 @@ public abstract class OAHashTable implements IHashTable {
 			}
 		}
 		throw new KeyDoesntExistException(key);
-
 	}
 
 	/**
