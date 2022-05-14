@@ -8,9 +8,14 @@ public class QPHashTable extends OAHashTable {
 		super(m);
 		this.h = ModHash.GetFunc(m, p);
 	}
-	
+
 	@Override
 	public int Hash(long x, int i) {
-		return (h.Hash(x) + (int) (Math.pow((double) i , 2d))) % m;
+		// long a = h.Hash(x);
+		// long j = i;
+		// long val = (a + (j * j)) % m;
+		// int index = (int) val;
+		// return index;
+		return (int) (((long) h.Hash(x) + (long) i * (long) i) % m);
 	}
 }
