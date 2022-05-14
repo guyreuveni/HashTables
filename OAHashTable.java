@@ -2,15 +2,16 @@
 public abstract class OAHashTable implements IHashTable {
 
 	private HashTableElement[] table;
+	protected int m;
 
 	public OAHashTable(int m) {
 		this.table = new HashTableElement[m];
-		// TODO add to constructor as needed
+		this.m = m;
 	}
 
 	@Override
 	public HashTableElement Find(long key) {
-		for (int i = 0; i < this.table.length; i++) {
+		for (int i = 0; i < m; i++) {
 			int probingIndex = this.Hash(key, i);
 			HashTableElement elem = this.table[probingIndex];
 			if (elem == null) {
@@ -30,7 +31,7 @@ public abstract class OAHashTable implements IHashTable {
 
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
-		for (int i = 0; i < this.table.length; i++) {
+		for (int i = 0; i < m; i++) {
 			int probingIndex = this.Hash(key, i);
 			HashTableElement elem = this.table[probingIndex];
 			if (elem == null) {
