@@ -11,7 +11,13 @@ public class AQPHashTable extends OAHashTable {
 
 	@Override
 	public int Hash(long x, int i) {
-		return (int) (((((long) this.h.Hash(x) + (((long) Math.pow(-1, i)) * (long) i * (long) i)) % m) + (long) m)
+		long sign;
+		if (i % 2 == 0) {
+			sign = 1;
+		} else {
+			sign = -1;
+		}
+		return (int) (((((long) this.h.Hash(x) + ((sign) * (long) i * (long) i)) % m) + (long) m)
 				% m);
 	}
 }
