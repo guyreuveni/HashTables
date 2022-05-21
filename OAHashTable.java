@@ -12,8 +12,9 @@ public abstract class OAHashTable implements IHashTable {
 
 	@Override
 	public HashTableElement Find(long key) {
+		int probingIndex;
 		for (int i = 0; i < m; i++) {
-			int probingIndex = this.Hash(key, i);
+			probingIndex = this.Hash(key, i);
 			HashTableElement elem = this.table[probingIndex];
 			if (elem == null) {
 				return null;
@@ -30,8 +31,9 @@ public abstract class OAHashTable implements IHashTable {
 		if (Find(hte.GetKey()) != null) {
 			throw new KeyAlreadyExistsException(hte);
 		}
+		int probingIndex;
 		for (int i = 0; i < m; i++) {
-			int probingIndex = this.Hash(hte.GetKey(), i);
+			probingIndex = this.Hash(hte.GetKey(), i);
 			if (this.isCellVirtuallyEmpty(probingIndex)) {
 				table[probingIndex] = hte;
 				return;
@@ -42,14 +44,14 @@ public abstract class OAHashTable implements IHashTable {
 
 	@Override
 	public void Delete(long key) throws KeyDoesntExistException {
+		int probingIndex;
 		for (int i = 0; i < m; i++) {
-			int probingIndex = this.Hash(key, i);
+			probingIndex = this.Hash(key, i);
 			HashTableElement elem = this.table[probingIndex];
 			if (elem == null) {
 				throw new KeyDoesntExistException(key);
 			}
 			if (elem.GetKey() == key) {
-				// HashTableElement deleted = new HashTableElement(-1, -1);
 				this.table[probingIndex] = DELETED;
 				return;
 			}

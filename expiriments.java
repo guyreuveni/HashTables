@@ -10,8 +10,9 @@ public class expiriments {
     public static void main(String[] args) throws Exception {
         // expiriments.q1QP();
         // expiriments.q1AQP();
-        // System.out.println(21 / 20);
-        // expiriments.q2s1();
+        System.out.println("###question 4a ####");
+        expiriments.q2s1();
+        System.out.println("###question 4b ####");
         expiriments.q2s2();
         // expiriments.q3();
     }
@@ -50,6 +51,8 @@ public class expiriments {
             HashTableElement hte = new HashTableElement(a, 0);
             table.Insert(hte);
         }
+        // System.out.println("cach misses for LP " + table.chachmiss);
+        // System.out.println("Avg step length for LP " + table.getAvgStepLength());
     }
 
     private static void q2s1QP() throws Exception {
@@ -61,6 +64,9 @@ public class expiriments {
             HashTableElement hte = new HashTableElement(a, 0);
             table.Insert(hte);
         }
+        // System.out.println("cach misses for QP " + table.chachmiss);
+        // System.out.println("Avg step length for QP " + table.getAvgStepLength());
+
     }
 
     private static void q2s1AQP() throws Exception {
@@ -72,6 +78,8 @@ public class expiriments {
             HashTableElement hte = new HashTableElement(a, 0);
             table.Insert(hte);
         }
+        // System.out.println("cach misses for AQP " + table.chachmiss);
+        // System.out.println("Avg step length for AQP " + table.getAvgStepLength());
     }
 
     private static void q2s1Double() throws Exception {
@@ -83,6 +91,9 @@ public class expiriments {
             HashTableElement hte = new HashTableElement(a, 0);
             table.Insert(hte);
         }
+        // System.out.println("cach misses for Double " + table.chachmiss);
+        // System.out.println("Avg step length for Double " + table.getAvgStepLength());
+
     }
 
     private static void q2s1() throws Exception {
