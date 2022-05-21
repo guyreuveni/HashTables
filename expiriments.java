@@ -12,8 +12,8 @@ public class expiriments {
         // expiriments.q1AQP();
         // System.out.println(21 / 20);
         // expiriments.q2s1();
-        // expiriments.q2s2();
-        expiriments.q3();
+        expiriments.q2s2();
+        // expiriments.q3();
     }
 
     private static void q1AQP() throws Exception {
@@ -21,7 +21,7 @@ public class expiriments {
         for (int j = 0; j < 100; j++) {
             AQPHashTable AQPtable = new AQPHashTable(6571, 1000000007);
             for (int i = 0; i < 6571; i++) {
-                long b = ThreadLocalRandom.current().nextLong(100);
+                long b = rand.nextInt(100);
                 long a = 100 * i + b;
                 HashTableElement hte = new HashTableElement(a, 0);
                 AQPtable.Insert(hte);
@@ -109,7 +109,7 @@ public class expiriments {
 
     private static void q2s2LP() throws Exception {
         LPHashTable table = new LPHashTable(10000019, 1000000007);
-        int n = (10000019 * 19) / 20;
+        int n = (int) Math.floor((19 * 10000019) / 20);
         for (int i = 0; i < n; i++) {
             long b = ThreadLocalRandom.current().nextLong(100);
             long a = 100 * i + b;
@@ -120,7 +120,7 @@ public class expiriments {
 
     private static void q2s2AQP() throws Exception {
         AQPHashTable table = new AQPHashTable(10000019, 1000000007);
-        int n = (10000019 * 19) / 20;
+        int n = (int) Math.floor((19 * 10000019) / 20);
         for (int i = 0; i < n; i++) {
             long b = ThreadLocalRandom.current().nextLong(100);
             long a = 100 * i + b;
@@ -131,7 +131,7 @@ public class expiriments {
 
     private static void q2s2Double() throws Exception {
         DoubleHashTable table = new DoubleHashTable(10000019, 1000000007);
-        int n = (10000019 * 19) / 20;
+        int n = (int) Math.floor((19 * 10000019) / 20);
         for (int i = 0; i < n; i++) {
             long b = ThreadLocalRandom.current().nextLong(100);
             long a = 100 * i + b;
@@ -159,20 +159,36 @@ public class expiriments {
 
     private static void q3() throws Exception {
         DoubleHashTable table = new DoubleHashTable(10000019, 1000000007);
-        Instant inst1 = Instant.now();
-        expiriments.InsertAndDeleteSeq(table);
-        expiriments.InsertAndDeleteSeq(table);
-        expiriments.InsertAndDeleteSeq(table);
-        Instant inst2 = Instant.now();
-        System.out.println("run time for first 3 iterations " +
-                Duration.between(inst1, inst2).toString());
-        inst1 = Instant.now();
-        expiriments.InsertAndDeleteSeq(table);
-        expiriments.InsertAndDeleteSeq(table);
-        expiriments.InsertAndDeleteSeq(table);
-        inst2 = Instant.now();
-        System.out.println("run time for first 3 iterations " +
-                Duration.between(inst1, inst2).toString());
+        for (int j = 0; j < 6; j++) {
+            List<Long> keys = expiriments.createRandomKeys(10000019 / 2);
+            Instant inst1 = Instant.now();
+            for (long key : keys) {
+                HashTableElement hte = new HashTableElement(key, 0);
+                table.Insert(hte);
+            }
+            for (long key : keys) {
+                table.Delete(key);
+            }
+            Instant inst2 = Instant.now();
+            System.out.println(
+                    "run time for iteration number: " + j + " is: " + Duration.between(inst1, inst2).toString());
+            // System.out
+            // .println("num of cells deleted after iteration number: " + j + " is: " +
+            // OAHashTable.numOfDeleted);
+        }
+        // expiriments.InsertAndDeleteSeq(table);
+        // expiriments.InsertAndDeleteSeq(table);
+        // expiriments.InsertAndDeleteSeq(table);
+        // Instant inst2 = Instant.now();
+        // System.out.println("run time for first 3 iterations " +
+        // Duration.between(inst1, inst2).toString());
+        // inst1 = Instant.now();
+        // expiriments.InsertAndDeleteSeq(table);
+        // expiriments.InsertAndDeleteSeq(table);
+        // expiriments.InsertAndDeleteSeq(table);
+        // inst2 = Instant.now();
+        // System.out.println("run time for last 3 iterations " +
+        // Duration.between(inst1, inst2).toString());
     }
 
     private static void InsertAndDeleteSeq(IHashTable table) throws Exception {
@@ -189,5 +205,18 @@ public class expiriments {
         for (long key : keys) {
             table.Delete(key);
         }
+    }
+
+    private static List<Long> createRandomKeys(int length) {
+        Random rand = new Random();
+        long a;
+        long b;
+        List<Long> keys = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            b = ThreadLocalRandom.current().nextLong(100);
+            a = (100 * i) + b;
+            keys.add(a);
+        }
+        return keys;
     }
 }

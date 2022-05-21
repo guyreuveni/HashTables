@@ -3,6 +3,7 @@ public abstract class OAHashTable implements IHashTable {
 
 	private HashTableElement[] table;
 	protected int m;
+	private static final HashTableElement DELETED = new HashTableElement(-1, -1);
 
 	public OAHashTable(int m) {
 		this.table = new HashTableElement[m];
@@ -26,12 +27,12 @@ public abstract class OAHashTable implements IHashTable {
 
 	@Override
 	public void Insert(HashTableElement hte) throws TableIsFullException, KeyAlreadyExistsException {
-		if (Find(hte.GetKey()) != null){
+		if (Find(hte.GetKey()) != null) {
 			throw new KeyAlreadyExistsException(hte);
 		}
-		for (int i=0; i < m; i++){
+		for (int i = 0; i < m; i++) {
 			int probingIndex = this.Hash(hte.GetKey(), i);
-			if (this.isCellVirtuallyEmpty(probingIndex)){
+			if (this.isCellVirtuallyEmpty(probingIndex)) {
 				table[probingIndex] = hte;
 				return;
 			}
@@ -48,8 +49,8 @@ public abstract class OAHashTable implements IHashTable {
 				throw new KeyDoesntExistException(key);
 			}
 			if (elem.GetKey() == key) {
-				HashTableElement deleted = new HashTableElement(-1, -1);
-				this.table[probingIndex] = deleted;
+				// HashTableElement deleted = new HashTableElement(-1, -1);
+				this.table[probingIndex] = DELETED;
 				return;
 			}
 		}
@@ -65,10 +66,10 @@ public abstract class OAHashTable implements IHashTable {
 	public abstract int Hash(long x, int i);
 
 	public boolean isCellVirtuallyEmpty(int index) {
-		if (this.table[index] == null){
+		if (this.table[index] == null) {
 			return true;
 		}
-		if (this.table[index].GetKey() == -1){
+		if (this.table[index].GetKey() == -1) {
 			return true;
 		}
 		return false;
