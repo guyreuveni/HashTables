@@ -9,12 +9,12 @@ public class expiriments {
 
     public static void main(String[] args) throws Exception {
         // expiriments.q1QP();
-        // expiriments.q1AQP();
+        expiriments.q1AQP();
         System.out.println("###question 4a ####");
         expiriments.q2s1();
         System.out.println("###question 4b ####");
         expiriments.q2s2();
-        // expiriments.q3();
+        expiriments.q3();
     }
 
     private static void q1AQP() throws Exception {

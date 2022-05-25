@@ -1,38 +1,38 @@
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class projectTwoPlayground {
     public static void main(String[] args) {
+        Set<Integer> s = new HashSet<>();
         int m = 10000019;
-        long p = 1000000007;
-        double startTime = 0;
-        double endTime = 0;
-        double regTime = 0, altTime = 0;
-        int sign;
-        long randNum;
-        int res;
-        for (int i = 0; i < m; i++) {
-            randNum = ThreadLocalRandom.current().nextLong(0, m);
-            // regTime
-            startTime = System.nanoTime();
-            res = (int) ((randNum + 1L * (long) Math.pow(i, 2))) % m;
-            endTime = System.nanoTime();
-            regTime += endTime - startTime;
-
-            // altTime
-            sign = (int) Math.pow(-1, i);
-            sign = (int) Math.pow(-1, i % 2);
-            startTime = System.nanoTime();
+        long QPsteps = 0;
+        long AQPsteps = 0;
+        int n = (int) Math.floor(m / 2);
+        int prevQPstep = 0;
+        int prevAQPstep = 0;
+        int currQPstep = 0;
+        int currAQPstep = 0;
+        for (int i = 0; i < n; i++) {
+            currQPstep = (int) (((long) i * (long) i) % m);
+            s.add(currQPstep);
             if (i % 2 == 0) {
-                sign = 1;
+                currAQPstep = (int) (((long) i * (long) i) % m);
             } else {
-                sign = -1;
+                currAQPstep = (int) ((((((-1) * (long) i * (long) i)) % m) + (long) m)
+                        % m);
             }
-            res = (int) ((randNum + sign * (long) Math.pow(i, 2))) % m;
-            endTime = System.nanoTime();
-            altTime += endTime - startTime;
+            QPsteps += Math.abs(prevQPstep - currQPstep);
+            AQPsteps += Math.abs(prevAQPstep - currAQPstep);
+            prevQPstep = currQPstep;
+            prevAQPstep = currAQPstep;
         }
-        System.out.println("Total runtime positive modulos " + Math.pow(10, -9) * regTime);
-        System.out.println("Total runtime alternating signs modulos " + Math.pow(10, -9) * altTime);
-    }
 
+        double avgQPstep = ((double) QPsteps) / ((double) n);
+        double avgAQPstep = ((double) AQPsteps) / ((double) n);
+
+        System.out.println("avg step length in qp is : " + avgQPstep);
+        System.out.println("avg step length in Aqp is : " + avgAQPstep);
+        System.out.println("size of set is " + s.size());
+    }
 }
