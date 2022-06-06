@@ -71,7 +71,7 @@ public abstract class OAHashTable implements IHashTable {
 		if (this.table[index] == null) {
 			return true;
 		}
-		if (this.table[index].GetKey() == -1) {
+		if (this.table[index] == DELETED) {
 			return true;
 		}
 		return false;
